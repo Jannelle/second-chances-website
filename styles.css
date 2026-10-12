@@ -1,0 +1,354 @@
+body {
+  margin: 0;
+  font-family: "Inter", Arial, sans-serif;
+  background:
+    radial-gradient(circle at top, rgba(255, 0, 0, 0.16), transparent 25%),
+    linear-gradient(180deg, #070707 0%, #121212 100%);
+  color: #f4f4f4;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 3rem;
+  background: rgba(10, 10, 10, 0.9);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.brand {
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: 0.2rem;
+  color: #ff1b2d;
+}
+
+.main-nav {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.main-nav a {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  transition: color 0.2s ease;
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+  color: #ffffff;
+}
+
+.page-shell {
+  width: min(1200px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding-bottom: 4rem;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.5fr 0.85fr;
+  gap: 2rem;
+  align-items: center;
+  min-height: 70vh;
+  padding: 3rem 0 1rem;
+}
+
+.eyebrow {
+  margin: 0 0 1rem;
+  color: #ff5b64;
+  letter-spacing: 0.2rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.hero-copy h1,
+.season-banner h1,
+.section-heading h2 {
+  margin: 0;
+  font-weight: 900;
+  letter-spacing: -0.06em;
+  line-height: 0.95;
+}
+
+.hero-copy h1 {
+  font-size: clamp(3.2rem, 7vw, 7rem);
+}
+
+.lede {
+  max-width: 620px;
+  margin-top: 1.25rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.08rem;
+  line-height: 1.7;
+}
+
+.cta-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.button {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 0.9rem 1.5rem;
+  font-weight: 700;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.button:hover {
+  transform: translateY(-1px);
+}
+
+.button-primary {
+  background: #e50914;
+  color: white;
+}
+
+.button-secondary {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.hero-panel {
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1.3rem;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.03));
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+}
+
+.panel-badge {
+  display: inline-block;
+  padding: 0.42rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(229, 9, 20, 0.14);
+  border: 1px solid rgba(229, 9, 20, 0.5);
+  color: #ffc1c5;
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.08rem;
+}
+
+.hero-panel h2 {
+  margin: 1rem 0 1.25rem;
+  font-size: clamp(1.7rem, 3vw, 2.3rem);
+  line-height: 1.1;
+}
+
+.hero-panel ul {
+  padding-left: 1.2rem;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 2;
+}
+
+.season-showcase {
+  padding-top: 0.5rem;
+}
+
+.section-heading {
+  margin-bottom: 1.8rem;
+}
+
+.section-heading h2 {
+  font-size: clamp(2.3rem, 4vw, 4rem);
+}
+
+.season-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.season-card {
+  padding: 1.5rem;
+  border-radius: 1.2rem;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+}
+
+.season-tag {
+  display: inline-block;
+  padding: 0.38rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #e50914;
+  font-weight: 800;
+  letter-spacing: 0.08rem;
+  font-size: 0.7rem;
+}
+
+.season-card h3 {
+  margin: 1rem 0 0.8rem;
+  font-size: 2rem;
+}
+
+.season-card p {
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.7;
+}
+
+.season-card ul {
+  padding-left: 1.1rem;
+  margin: 1rem 0 1.4rem;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.9;
+}
+
+.card-link {
+  color: #ffd1d4;
+  font-weight: 700;
+}
+
+.season-banner {
+  padding: 4rem 0 1rem;
+}
+
+.season-banner h1 {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 1.2rem;
+  color: #d6d6d6;
+  font-weight: 600;
+}
+
+.cast-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.4rem;
+  margin-top: 2rem;
+}
+
+.cast-card {
+  position: relative;
+  padding: 1.4rem;
+  border-radius: 1.2rem;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.cast-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 100%;
+  height: 6px;
+  background: linear-gradient(90deg, #e50914, #8b0f18);
+}
+
+.avatar {
+  width: 62px;
+  height: 62px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e50914, #7b0d14);
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.cast-card h2 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.role {
+  margin: 0.35rem 0 0.9rem;
+  color: #ffb4b8;
+  font-weight: 700;
+  letter-spacing: 0.04rem;
+  text-transform: uppercase;
+  font-size: 0.76rem;
+}
+
+.cast-card p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.75;
+}
+
+
+@media (max-width: 900px) {
+  .hero,
+  .season-grid,
+  .cast-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .topbar {
+    padding: 1rem 1.1rem;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .page-shell {
+    width: min(100% - 1.2rem, 1200px);
+  }
+}
+
+/* Layout for content pages */
+.page {
+  width: 100%;
+  padding: 0 2rem 4rem;
+}
+
+.page-content {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-width: 0;
+}
+
+/* Readable text width */
+.content-section {
+  max-width: 850px;
+}
+
+.content-section p,
+.content-section li {
+  line-height: 1.7;
+}
+
+.content-section h2 {
+  margin-top: 2rem;
+  margin-bottom: 0.8rem;
+}
+
+/* Mobile spacing */
+@media (max-width: 900px) {
+  .page {
+    padding: 0 1.2rem 3rem;
+  }
+}
