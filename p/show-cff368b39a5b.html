@@ -7,7 +7,7 @@
 :root{--bg:#120a1c;--bg2:#2a0f3a;--pink:#ff3fa4;--gold:#ffd166;--ink:#fff;--mute:#c9b6d9;--red:#ff4d5e}
 *{box-sizing:border-box;margin:0}
 html,body{height:100%;background:var(--bg);color:var(--ink);font-family:-apple-system,"SF Pro Display","Segoe UI",Helvetica,Arial,sans-serif;overflow:hidden;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
-#stage{position:fixed;inset:0;background:radial-gradient(120% 90% at 50% 0%,var(--bg2),var(--bg) 70%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:5vmin 6vmin}
+#stage{position:fixed;inset:0;background:radial-gradient(120% 90% at 50% 0%,var(--bg2),var(--bg) 70%);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:5vmin 6vmin 8vmin}
 .scene{display:none;width:100%;height:100%;flex-direction:column;align-items:center;justify-content:center;gap:2.6vmin}
 .scene.on{display:flex;animation:in .5s ease}
 @keyframes in{from{opacity:0;transform:scale(.985)}to{opacity:1;transform:none}}
@@ -78,8 +78,19 @@ img.sh{max-height:62vh;max-width:50vw;border-radius:2vmin;box-shadow:0 0 8vmin #
 .sfoot{display:flex;align-items:center;gap:1.6vmin;padding:1.6vmin 1.8vmin 2.2vmin}
 .reply{flex:1;border:.25vmin solid #fffd;border-radius:6vmin;padding:1.4vmin 2.4vmin;font-size:2.2vmin}
 .ico{font-size:3.4vmin}
+.rg{display:grid;grid-template-columns:repeat(var(--c),1fr);gap:2vmin;width:95vw}
+.rc{background:#1b1526;border:.4vmin solid #3b2c52;border-radius:2vmin;padding:2.2vmin 2.6vmin;text-align:left}
+.rc.new{border-color:var(--pink)}
+.rl{font-size:2vmin;letter-spacing:.18em;color:var(--pink);font-weight:800;margin-bottom:1vmin}
+.rb{font-size:2.6vmin;line-height:1.4}.rb hr{border:0;border-top:1px solid #3b2c52;margin:1.2vmin 0}
+.dim{color:var(--mute)}.redt{color:var(--red);letter-spacing:.2em}
+#hint{position:fixed;bottom:1.6vmin;left:50%;transform:translateX(-50%);padding:1.1vmin 2.6vmin;border-radius:5vmin;font-weight:900;font-size:2.2vmin;letter-spacing:.12em;z-index:6;white-space:nowrap}
+#hint.safe{background:#1f7a4a;color:#fff}
+#hint.stop{background:#a1182b;color:#fff}
+.rg{align-items:start}.s5 .rb{font-size:2vmin;line-height:1.3}.s5 .rc{padding:1.3vmin 1.8vmin}.s5 .rl{font-size:1.7vmin;margin-bottom:.6vmin}.s5{gap:1.4vmin}
 </style></head><body>
 <div id="stage"></div>
+<div id="hint"></div>
 <button id="menuBtn" aria-label="menu">☰</button>
 <div id="menu"></div>
 <script>
@@ -88,15 +99,27 @@ const ROUNDS=[["Round 1","about 6:50",["Kayla","Ragini","Marc"]],["Round 2","abo
 const CHAT=[["2:29:41","moonpie_gremlin","she's so unserious today I love it"],["2:29:52","xX_toast_lord_Xx","the mic quality is insane for a \"budget setup\""],["2:30:03","pickle_oracle","clip that"],["2:30:19","sleepy_lantern","chat I have a math test in 6 hours and I am here. no regrets"],["2:30:44","dumpling_dad","MORI NOTICE ME"],["2:30:58","kiwi_menace","the lore is getting so deep rn"],["2:31:12","no_thoughts_head_empty","W stream"],["2:31:27","gravy_goblin","she's been on for 2 hours and still hasn't sat down properly lol"],["2:31:41","pickle_oracle","I love this voice so much"],["2:31:55","moonpie_gremlin","LMAOOO"],["2:32:08","Jannelle","wait I think I know you lmao",1],["2:32:10","kiwi_menace","WAIT WHAT"],["2:32:11","sleepy_lantern","knows her??"],["2:32:12","dumpling_dad","who is that"],["2:32:13","toast_lord_backup","uh"],["2:32:14","gravy_goblin","did the stream just freeze"],["2:32:16","no_thoughts_head_empty","???"],["2:32:19","moonpie_gremlin","she's gone"]];
 const COLORS=["#ff8fb8","#8fd3ff","#ffd166","#b8f28f","#d0a8ff","#ffa97a"];
 // scenes: id,label,time label,until(HH:MM),paused,html fn,onEnter
+const RC={
+1:["DROP 1 · CALL LOG",`📞 <b>sec_admirer_4421</b> started a call that lasted a minute.<br><span class="dim">Murder night, mid-match</span>`],
+2:["DROP 2 · BREAKING NEWS",`The autopsy is final: <b>fall damage</b>. Jannelle fell from the roof. Guests heard <b>“LET GO.”</b> One also heard something about <b>stars</b>.<br>Lobby camera: a woman in black leather on one long phone call by the stairwell. She never went up.`],
+3:["DROP 3 · MORI'S STREAM AND STORY",`<span class="dim">2:32:08</span> <b style="color:#ffd166">Jannelle</b> wait I think I know you lmao<br><span class="dim">2:32:10</span> kiwi_menace WAIT WHAT<br><span class="dim">2:32:11</span> sleepy_lantern knows her??<br><span class="dim">2:32:14</span> gravy_goblin did the stream just freeze<br><span class="dim">2:32:19</span> moonpie_gremlin she's gone<br><b class="redt">STREAM ENDED</b><hr>Story from <b>jannelledoesstuff</b>: “I can't believe I did good loving with <span class="mention">@mori_calliope</span>!”<br>Police now believe Mori Calliope is the person who was with her.`],
+4:["DROP 4 · OLD MORI STREAM",`🔊 <b class="gold">faint animal noise</b> in the background`],
+5:["DROP 5 · THE LURE MESSAGE",`<b>sec_admirer_4421:</b> come up to the roof 😘 just you and me. been wanting you since the first night. let's make it official 💍`]};
+function recapH(n){const c=n<=2?n:(n<=4?2:3);let g='';for(let i=1;i<=n;i++)g+=`<div class="rc ${i===n?'new':''}"><div class="rl">${RC[i][0]}</div><div class="rb">${RC[i][1]}</div></div>`;return `<div class="tag">Evidence so far</div><div class="rg ${n>=5?'s5':''}" style="--c:${c}">${g}</div>`}
 const S=[
-{l:"Arrival",t:"before 6:00",until:"18:00",h:()=>`<div class="tag">Season finale</div><h1>Second Chances:<br><span class="pink">The Second Try</span></h1><div class="mid">Who killed Jannelle?</div>`,cd:"Cameras roll at 6:00"},
+{l:"Arrival",safe:1,t:"before 6:00",until:"18:00",h:()=>`<div class="tag">Season finale</div><h1>Second Chances:<br><span class="pink">The Second Try</span></h1><div class="mid">Who killed Jannelle?</div>`,cd:"Cameras roll at 6:00"},
 {l:"Welcome and love letters",t:"6:00",until:"19:05",h:()=>`<div class="tag">Welcome to the show</div><h2>Love letters</h2><div class="big">Write to anyone, any time.<br>Two cards each: one for each mail call.</div><div class="mid">Drop them in the letter box. Monica sorts and hands them out.</div>`,cd:"Drop 1 at 7:05"},
 {l:"Drop 1",t:"7:05",until:"19:25",paused:1,h:()=>`<div class="tag">Drop 1 · Evidence</div><div class="mid">Recovered from Jannelle's phone. The call that pulled her out of her match.</div><div class="discord"><div class="d">Discord · Today</div><div><b>📞 sec_admirer_4421</b> started a call that lasted a minute.</div><div class="dim" style="margin-top:1.6vmin">Murder night, mid-match</div><div class="dim" style="margin-top:1.6vmin;font-size:2.6vmin">You cannot reply to this conversation.</div></div>`,cd:"Drop 2 at 7:25"},
-{l:"Drop 2",t:"7:25",until:"19:35",paused:1,h:()=>`<div class="news">BREAKING NEWS · THE INVESTIGATION</div><div class="big" style="max-width:82vw">The autopsy is final.<br><span class="gold">Cause of death: fall damage.</span><br>Jannelle fell from the roof.</div><div class="mid">Two hotel guests heard a voice yell <b style="color:#fff">“LET GO.”</b> One also heard something about <b style="color:#fff">stars</b>.<br>The lobby camera shows a woman in black leather on one long phone call by the stairwell. She never went up.</div>`,cd:"Drop 3 at 7:35"},
-{l:"Drop 3: Mori's stream",t:"7:35",until:"19:40",paused:1,chat:1,h:()=>`<div class="tag">Drop 3 · Recovered from Mori Calliope's livestream</div><div class="chat" id="chat"></div>`,cd:""},
-{l:"Drop 3: Instagram story",t:"7:37",until:"19:40",paused:1,h:()=>`<div class="igwrap"><div class="story"><div class="sbar"><i></i></div><div class="shead"><div class="av"><span>J</span></div><b>jannelledoesstuff</b><em>2h</em><span class="dots3">•••</span></div><div class="sbody"><div class="stxt">I can't believe I did good loving with <span class="mention">@mori_calliope</span>!</div></div><div class="sfoot"><div class="reply">Send message</div><div class="ico">♡</div><div class="ico">➤</div></div></div><div class="igside"><div class="tag" style="text-align:left">Recovered from Jannelle's phone</div><div class="mid" style="text-align:left">Her last-ever Instagram story.</div><div class="big" style="text-align:left;margin-top:2vmin">Police now believe <span class="pink">Mori Calliope</span> is the person who was with her.</div></div></div>`,cd:""},
-{l:"Drop 4",t:"8:00",until:"20:15",paused:1,h:()=>`<div class="tag">Drop 4 · Recovered by production</div><div class="mid">An old Mori stream. Listen closely to the background.</div><div class="big" style="font-size:7vmin">🔊 <span class="gold">faint animal noise</span><br>in the background</div><div class="mid">Whose pet makes noise?</div>`,cd:"Drop 5 at 8:15"},
-{l:"Drop 5: the lure",t:"8:15",until:"20:20",paused:1,h:()=>`<div class="tag">Drop 5 · The lure message</div><div class="mid">From sec_admirer_4421, the same account that called her.</div><div class="discord"><div class="d">Discord · Direct message</div><div><b>sec_admirer_4421</b></div><div style="margin-top:1.4vmin">come up to the roof 😘 just you and me. been wanting you since the first night. let's make it official 💍</div></div>`,cd:""}];
+{l:"Drop 2",safe:1,t:"7:25",until:"19:35",paused:1,h:()=>`<div class="news">BREAKING NEWS · THE INVESTIGATION</div><div class="big" style="max-width:82vw">The autopsy is final.<br><span class="gold">Cause of death: fall damage.</span><br>Jannelle fell from the roof.</div><div class="mid">Two hotel guests heard a voice yell <b style="color:#fff">“LET GO.”</b> One also heard something about <b style="color:#fff">stars</b>.<br>The lobby camera shows a woman in black leather on one long phone call by the stairwell. She never went up.</div>`,cd:"Drop 3 at 7:35"},
+{l:"Evidence: drops 1-2",t:"7:27",until:"19:35",h:()=>recapH(2),cd:"Drop 3 at 7:35"},
+{l:"Drop 3: Mori's stream",safe:1,t:"7:35",until:"19:40",paused:1,chat:1,h:()=>`<div class="tag">Drop 3 · Recovered from Mori Calliope's livestream</div><div class="chat" id="chat"></div>`,cd:""},
+{l:"Drop 3: Instagram story",safe:1,t:"7:37",until:"19:40",paused:1,h:()=>`<div class="igwrap"><div class="story"><div class="sbar"><i></i></div><div class="shead"><div class="av"><span>J</span></div><b>jannelledoesstuff</b><em>2h</em><span class="dots3">•••</span></div><div class="sbody"><div class="stxt">I can't believe I did good loving with <span class="mention">@mori_calliope</span>!</div></div><div class="sfoot"><div class="reply">Send message</div><div class="ico">♡</div><div class="ico">➤</div></div></div><div class="igside"><div class="tag" style="text-align:left">Recovered from Jannelle's phone</div><div class="mid" style="text-align:left">Her last-ever Instagram story.</div><div class="big" style="text-align:left;margin-top:2vmin">Police now believe <span class="pink">Mori Calliope</span> is the person who was with her.</div></div></div>`,cd:""},
+{l:"Evidence: drops 1-3",t:"7:39",until:"20:00",h:()=>recapH(3),cd:"Drop 4 at 8:00"},
+{l:"Drop 4",safe:1,t:"8:00",until:"20:15",paused:1,h:()=>`<div class="tag">Drop 4 · Recovered by production</div><div class="mid">An old Mori stream. Listen closely to the background.</div><div class="big" style="font-size:7vmin">🔊 <span class="gold">faint animal noise</span><br>in the background</div><div class="mid">Whose pet makes noise?</div>`,cd:"Drop 5 at 8:15"},
+{l:"Evidence: drops 1-4",t:"8:02",until:"20:15",h:()=>recapH(4),cd:"Drop 5 at 8:15"},
+{l:"Drop 5: the lure",safe:1,t:"8:15",until:"20:20",paused:1,h:()=>`<div class="tag">Drop 5 · The lure message</div><div class="mid">From sec_admirer_4421, the same account that called her.</div><div class="discord"><div class="d">Discord · Direct message</div><div><b>sec_admirer_4421</b></div><div style="margin-top:1.4vmin">come up to the roof 😘 just you and me. been wanting you since the first night. let's make it official 💍</div></div>`,cd:""},
+{l:"Evidence: all five drops",t:"8:17",until:"",h:()=>recapH(5),cd:"",last:1}
+];
 const $=s=>document.querySelector(s);
 let cur=+(localStorage.getItem('sc-scene')||0),step=0,qr=+(localStorage.getItem('sc-q')||-1),chatTimer=null;
 let qp=localStorage.getItem('sc-qp')==='1';
@@ -118,6 +141,7 @@ function render(){
   if(s.q){el.innerHTML=queueHTML()+`<div class="next" id="cd"></div>`}
   else{el.innerHTML=s.h()+`<div class="next" id="cd"></div>`}
   if(s.chat){const c=$('#chat');let i=0;const add=()=>{if(i<CHAT.length){const m=CHAT[i++];const d=document.createElement('div');d.className='m';d.innerHTML=`<span class="ts">${m[0]}</span><span class="u" style="color:${m[3]?'#ffd166':COLORS[m[1].length%COLORS.length]}">${m[1]}</span>${m[2]}`;c.appendChild(d)}else if(i===CHAT.length){i++;const d=document.createElement('div');d.className='end';d.textContent='STREAM ENDED';c.appendChild(d);clearInterval(chatTimer)}};add();chatTimer=setInterval(add,1100)}
+  const nx=S[cur+1],hi=$('#hint');if(!nx||s.last){hi.style.display='none'}else{hi.style.display='block';hi.className=s.safe?'safe':'stop';hi.textContent=s.safe?'✓ SAFE TO HIT NEXT':'✋ DON\'T HIT NEXT UNTIL READY · NEXT: '+nx.l.toUpperCase()}
   localStorage.setItem('sc-scene',cur);
   tick();
 }
