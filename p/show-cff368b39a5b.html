@@ -61,6 +61,23 @@ img.sh{max-height:62vh;max-width:50vw;border-radius:2vmin;box-shadow:0 0 8vmin #
 #menu button{display:block;width:100%;text-align:left;background:#1f1630;color:#fff;border:0;border-radius:1.4vmin;margin:.8vmin 0;padding:1.6vmin 2.4vmin;font-size:2.8vmin;font-weight:600}
 #menu button.cur{background:var(--pink)}
 #menu .x{background:#3b2c52;text-align:center;font-weight:800}
+
+.igwrap{display:flex;align-items:center;justify-content:center;gap:6vmin;width:100%}
+.igside{max-width:42vw}
+.story{position:relative;height:80vh;aspect-ratio:9/16;border-radius:2.4vmin;overflow:hidden;background:linear-gradient(160deg,#f58529 0%,#dd2a7b 38%,#8134af 70%,#515bd4 100%);box-shadow:0 0 6vmin #0008;display:flex;flex-direction:column;text-align:left;color:#fff}
+.sbar{margin:1.6vmin 1.8vmin 0;height:.5vmin;background:#ffffff55;border-radius:1vmin;overflow:hidden}
+.sbar i{display:block;height:100%;width:100%;background:#fff;transform-origin:left;animation:sb 6s linear forwards}
+@keyframes sb{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.shead{display:flex;align-items:center;gap:1.4vmin;padding:1.6vmin 1.8vmin;font-size:2.2vmin}
+.shead em{font-style:normal;opacity:.8}
+.shead .dots3{margin-left:auto;font-size:2.4vmin;letter-spacing:.2em}
+.av{width:5.2vmin;height:5.2vmin;border-radius:50%;background:#fff;color:#c13584;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:2.6vmin}
+.sbody{flex:1;display:flex;align-items:center;justify-content:center;padding:3vmin}
+.stxt{background:#fff;color:#111;border-radius:1.4vmin;padding:2vmin 2.4vmin;font-weight:700;font-size:3vmin;line-height:1.25;text-align:center;transform:rotate(-2deg);box-shadow:0 .6vmin 2vmin #0004}
+.mention{color:#0095f6}
+.sfoot{display:flex;align-items:center;gap:1.6vmin;padding:1.6vmin 1.8vmin 2.2vmin}
+.reply{flex:1;border:.25vmin solid #fffd;border-radius:6vmin;padding:1.4vmin 2.4vmin;font-size:2.2vmin}
+.ico{font-size:3.4vmin}
 </style></head><body>
 <div id="stage"></div>
 <button id="menuBtn" aria-label="menu">☰</button>
@@ -77,7 +94,7 @@ const S=[
 {l:"Drop 1",t:"7:05",until:"19:25",paused:1,h:()=>`<div class="tag">Drop 1 · Evidence</div><div class="mid">Recovered from Jannelle's phone. The call that pulled her out of her match.</div><div class="discord"><div class="d">Discord · Today</div><div><b>📞 sec_admirer_4421</b> started a call that lasted a minute.</div><div class="dim" style="margin-top:1.6vmin">Murder night, mid-match</div><div class="dim" style="margin-top:1.6vmin;font-size:2.6vmin">You cannot reply to this conversation.</div></div>`,cd:"Drop 2 at 7:25"},
 {l:"Drop 2",t:"7:25",until:"19:35",paused:1,h:()=>`<div class="news">BREAKING NEWS · THE INVESTIGATION</div><div class="big" style="max-width:82vw">The autopsy is final.<br><span class="gold">Cause of death: fall damage.</span><br>Jannelle fell from the roof.</div><div class="mid">Two hotel guests heard a voice yell <b style="color:#fff">“LET GO.”</b> One also heard something about <b style="color:#fff">stars</b>.<br>The lobby camera shows a woman in black leather on one long phone call by the stairwell. She never went up.</div>`,cd:"Drop 3 at 7:35"},
 {l:"Drop 3: Mori's stream",t:"7:35",until:"19:40",paused:1,chat:1,h:()=>`<div class="tag">Drop 3 · Recovered from Mori Calliope's livestream</div><div class="chat" id="chat"></div>`,cd:""},
-{l:"Drop 3: Instagram story",t:"7:37",until:"19:40",paused:1,h:()=>`<div class="tag">Recovered from Jannelle's phone</div><div class="mid">Her last-ever Instagram story:</div><div class="ig"><div>“I can't believe I did good loving with Mori Calliope!”</div></div><div class="big" style="margin-top:1vmin">Police now believe <span class="pink">Mori Calliope</span><br>is the person who was with her.</div>`,cd:""},
+{l:"Drop 3: Instagram story",t:"7:37",until:"19:40",paused:1,h:()=>`<div class="igwrap"><div class="story"><div class="sbar"><i></i></div><div class="shead"><div class="av"><span>J</span></div><b>jannelle</b><em>2h</em><span class="dots3">•••</span></div><div class="sbody"><div class="stxt">I can't believe I did good loving with <span class="mention">@mori_calliope</span>!</div></div><div class="sfoot"><div class="reply">Send message</div><div class="ico">♡</div><div class="ico">➤</div></div></div><div class="igside"><div class="tag" style="text-align:left">Recovered from Jannelle's phone</div><div class="mid" style="text-align:left">Her last-ever Instagram story.</div><div class="big" style="text-align:left;margin-top:2vmin">Police now believe <span class="pink">Mori Calliope</span> is the person who was with her.</div></div></div>`,cd:""},
 {l:"Drop 4",t:"8:00",until:"20:15",paused:1,h:()=>`<div class="tag">Drop 4 · Recovered by production</div><div class="mid">An old Mori stream. Listen closely to the background.</div><div class="big" style="font-size:7vmin">🔊 <span class="gold">faint animal noise</span><br>in the background</div><div class="mid">Whose pet makes noise?</div>`,cd:"Drop 5 at 8:15"},
 {l:"Drop 5: the lure",t:"8:15",until:"20:20",paused:1,h:()=>`<div class="tag">Drop 5 · The lure message</div><div class="mid">From sec_admirer_4421, the same account that called her.</div><div class="discord"><div class="d">Discord · Direct message</div><div><b>sec_admirer_4421</b></div><div style="margin-top:1.4vmin">come up to the roof 😘 just you and me. been wanting you since the first night. let's make it official 💍</div></div>`,cd:""}];
 const $=s=>document.querySelector(s);
